@@ -1,0 +1,61 @@
+name: spx
+version: '6.8.0-67'
+summary: Backup and disaster recovery for Linux virtual and physical machines
+description: |
+  Unofficial SNAP for StorageCraft Shadow Protect SPX.
+  Backup and disaster recovery for Linux virtual and physical machines.
+  Virtualize your backups with Virtualbox, vSphere or Hyper-V.
+  https://www.storagecraft.com
+
+grade: devel 
+confinement: devmode
+
+architectures:
+  - build-on: amd64
+
+apps:
+  spx-agent:
+    command: opt/StorageCraft/spx/bin/spx_service
+    plugs:
+      - desktop
+      - desktop-legacy
+      - wayland
+      - home
+      - network
+      - io-ports-control
+      - kernel-module-control
+      - mount-observe
+      - removable-media
+      - system-files
+  spx-gui:
+    command: opt/StorageCraft/spx/bin/spx_gui
+    plugs:
+      - desktop
+      - desktop-legacy
+      - wayland
+      - home
+      - network
+      - io-ports-control
+      - kernel-module-control
+      - mount-observe
+      - removable-media
+      - system-files
+
+parts:
+  spx:
+    source: .
+    plugin: dump
+    override-build: |
+      wget https://downloads.storagecraft.com/spx/Ubuntu16.04/storagecraft-repo-latest.deb -O storagecraft-repo-latest.deb
+      sudo dpkg -i storagecraft-repo-latest.deb
+      sudo apt-get update
+      sudo apt-get install spx
+      sudo /usr/bin/gpasswd -a $USER spx
+    stage-packages:
+      - spx
+      - spx-common
+      - spx-gui
+      - spx-agent
+      - libhivex0
+      - libcrypto++9v5
+      - kpartx
