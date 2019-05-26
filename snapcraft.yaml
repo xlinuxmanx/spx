@@ -54,10 +54,7 @@ parts:
       apt install spx
       /usr/bin/gpasswd -a $USER spx
     stage-packages:
-      - spx
-      - spx-common
-      - spx-agent
-      - spx-gui
+      - wget
       - libhivex0
       - libcrypto++9v5
       - kpartx
