@@ -8,13 +8,14 @@ description: |
   https://www.storagecraft.com
 
 grade: devel 
-confinement: devmode
+confinement: classic
 
 architectures:
   - build-on: amd64
 
 apps:
   spx-agent:
+    daemon: notify
     command: opt/StorageCraft/spx/bin/spx_service
     plugs:
       - desktop
