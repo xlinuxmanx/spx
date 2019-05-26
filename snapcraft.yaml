@@ -48,14 +48,11 @@ parts:
     override-build: |
       wget https://downloads.storagecraft.com/spx/Ubuntu16.04/storagecraft-repo-latest.deb -O storagecraft-repo-latest.deb
       dpkg -i storagecraft-repo-latest.deb
-      apt-get update
-      apt-get install spx
+      echo 'deb http://downloads.storagecraft.com/spx/Ubuntu16.04/stc/public current main' > /etc/apt/sourcea.list.d/storagecraft-repo.list
+      apt update
+      apt install spx
       /usr/bin/gpasswd -a $USER spx
     stage-packages:
-      - spx
-      - spx-common
-      - spx-gui
-      - spx-agent
       - libhivex0
       - libcrypto++9v5
       - kpartx
